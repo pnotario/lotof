@@ -5,3 +5,4 @@ sqlalchemy
 pymysql
 gunicorn
 mysql-connector-python
+mariadb
