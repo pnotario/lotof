@@ -1,10 +1,12 @@
 from dash import Dash, dcc, html, Input, Output, State
+import pymysql
 import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from sqlalchemy import create_engine
 from collections import Counter
 import io
+
 
 app = Dash(__name__)
 
@@ -355,4 +357,5 @@ def update_theme(dark_theme):
 
 if __name__ == '__main__':
     app.run_server(debug=False)
+server = app.server  # Per Gunicorn
 
