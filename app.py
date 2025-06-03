@@ -6,10 +6,21 @@ import plotly.express as px
 from sqlalchemy import create_engine
 from collections import Counter
 import io
+import os
 
 
 app = Dash(__name__)
 server = app.server  # Per Gunicorn
+
+db_user = os.getenv("DB_USER")
+db_password = os.getenv("DB_PASSWORD")
+db_host = os.getenv("DB_HOST")
+db_port = os.getenv("DB_PORT", "4082")
+db_name = os.getenv("DB_NAME")
+
+DATABASE_URL = f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+engine = create_engine(DATABASE_URL)
+
 
 # Tema scuro/light
 app.layout = html.Div([
@@ -65,8 +76,15 @@ app.layout = html.Div([
 ], id='main-div')
 
 def create_engine_from_params(user, password, host, port, dbname):
-    conn_str = f"mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}"
-    return create_engine(conn_str)
+    #conn_str = f"mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}"
+    #conn_str = f"mariadb+mariadbconnector://{user}:{password}@{host}:{port}/{dbname}"
+    #conn_str = f"mariadb --host serverless-europe-west2.sysp0000.db2.skysql.com --port 4082 --user dbpgf17746360 -p --ssl-verify-server-cert"
+    #conn_str = f"mysql+pymysql://dbpgf17746360:your_password@serverless-europe-west2.sysp0000.db2.skysql.com:4082/mydatabase?ssl_ca=/home/pier/documenti/lotof/app.skysql.com.pem"
+	conn_str = (
+       	 f"mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}"
+       	 "?ssl_ca=/home/pier/documenti/lotof/app.skysql.com.pem"
+    	)
+	return create_engine(conn_str)
 
 def load_data(engine):
     query = """
