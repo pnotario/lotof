@@ -82,8 +82,9 @@ def create_engine_from_params(user, password, host, port, dbname):
     #conn_str = f"mysql+pymysql://dbpgf17746360:your_password@serverless-europe-west2.sysp0000.db2.skysql.com:4082/mydatabase?ssl_ca=/home/pier/documenti/lotof/app.skysql.com.pem"
 	conn_str = (
        	 f"mysql+pymysql://{user}:{password}@{host}:{port}/{dbname}"
-       	 "?ssl_ca=/home/pier/documenti/lotof/app.skysql.com.pem"
+       	 "?ssl_ca=app.skysql.com.pem"
     	)
+       	 #"?ssl_ca=/home/pier/documenti/lotof/app.skysql.com.pem"
 	return create_engine(conn_str)
 
 def load_data(engine):
